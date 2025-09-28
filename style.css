@@ -34,6 +34,32 @@ body {
     font-size: 1.2rem;
     color: #cccccc;
     font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bot-btn {
+    background: #007acc;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.bot-btn:hover {
+    background: #005999;
+    transform: translateY(-1px);
 }
 
 .calculator-panel {
@@ -284,7 +310,7 @@ body {
     background: #28a745;
 }
 
-.odd-controls {
+.odd-controls-inline {
     display: flex;
     gap: 6px;
 }
