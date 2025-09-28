@@ -16,7 +16,7 @@ Mindig magyarul válaszolj, barátságosan és segítőkészen. Ha nem sportfoga
 Fontos: Soha ne adj biztosra menő tippet, mindig hangsúlyozd a kockázatokat!`;
 
 // A GEMINI_API_KEY a Vercel Environment Variables-ből lesz beolvasva
-const ai = new GoogleGenAI(process.process.env.GEMINI_API_KEY); 
+const ai = new GoogleGenAI(process.env.GEMINI_API_KEY); 
 
 // Ez a függvény fut le minden /api/chat POST kérésre
 export default async function handler(req, res) {
@@ -71,3 +71,4 @@ export default async function handler(req, res) {
         res.status(500).json({ error: errorMessage });
     }
 }
+
