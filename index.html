@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tökszár Család Tippmix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Tökszár Család</h1>
+            <p class="subtitle">Tippmix</p>
+        </header>
+
+        <div class="calculator-panel">
+            <div class="top-section">
+                <div class="input-group">
+                    <label for="combination">Kombináció:</label>
+                    <select id="combination" class="combination-select">
+                        <option value="1/1">1/1</option>
+                        <option value="2/2">2/2</option>
+                        <option value="3/3">3/3</option>
+                        <option value="4/4">4/4</option>
+                        <option value="5/5">5/5</option>
+                        <option value="2/3">2/3</option>
+                        <option value="3/4">3/4</option>
+                        <option value="4/5">4/5</option>
+                        <option value="3/5">3/5</option>
+                        <option value="2/4">2/4</option>
+                        <option value="2/5">2/5</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="betAmount">Alaptét:</label>
+                    <div class="bet-input-container">
+                        <input type="number" id="betAmount" class="bet-input" value="100" min="0" step="10">
+                        <span class="currency">Ft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <div class="summary-item">
+                    <span class="summary-label">Fogadás összege:</span>
+                    <span id="totalBet" class="summary-value">400 Ft</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Max nyeremény:</span>
+                    <span id="maxWin" class="summary-value">1077 Ft</span>
+                </div>
+            </div>
+
+            <div class="odds-section">
+                <div class="section-header">
+                    <h3>Szorzók</h3>
+                    <div class="odds-controls">
+                        <button id="removeOdd" class="control-btn remove">−</button>
+                        <button id="addOdd" class="control-btn add">+</button>
+                    </div>
+                </div>
+
+                <div id="oddsList" class="odds-list">
+                    <!-- Dinamikusan generált szorzók -->
+                </div>
+            </div>
+
+            <button class="calculate-btn">Számítás</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
