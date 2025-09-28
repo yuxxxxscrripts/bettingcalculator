@@ -1,6 +1,5 @@
 // api/chat.js (Serverless Function)
 
-// Használjuk az ES Module szintaxist Vercel-ben
 import { GoogleGenAI } from '@google/genai';
 
 // A rendszer utasítása (system prompt)
@@ -17,7 +16,7 @@ Mindig magyarul válaszolj, barátságosan és segítőkészen. Ha nem sportfoga
 Fontos: Soha ne adj biztosra menő tippet, mindig hangsúlyozd a kockázatokat!`;
 
 // A GEMINI_API_KEY a Vercel Environment Variables-ből lesz beolvasva
-const ai = new GoogleGenAI(process.env.GEMINI_API_KEY); 
+const ai = new GoogleGenAI(process.process.env.GEMINI_API_KEY); 
 
 // Ez a függvény fut le minden /api/chat POST kérésre
 export default async function handler(req, res) {
@@ -25,8 +24,14 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Csak POST kérések engedélyezettek.' });
     }
 
-    // A felhasználói üzenet kinyerése
-    const userMessage = req.body.message;
+    let userMessage;
+    try {
+        // A felhasználói üzenet kinyerése
+        userMessage = req.body.message;
+    } catch (e) {
+        return res.status(400).json({ error: 'Érvénytelen JSON formátum a kérésben.' });
+    }
+
 
     if (!userMessage) {
         return res.status(400).json({ error: 'Hiányzik az üzenet a kérelemből.' });
@@ -51,7 +56,18 @@ export default async function handler(req, res) {
         // Visszaküldjük a választ a frontendnek 'text' néven
         res.status(200).json({ text: response.text });
     } catch (error) {
-        console.error('Hiba a Gemini hívásakor:', error);
-        res.status(500).json({ error: 'Hiba történt a válasz generálásakor a szerver oldalon. Ellenőrizze a Vercel logokat.' });
+        console.error('Hiba a Gemini hívásakor:', error.message);
+        
+        // Itt adjuk vissza az 500-as hibát egy részletesebb üzenettel
+        let errorMessage = 'Belső szerverhiba történt.';
+        
+        if (error.message.includes('API key')) {
+             errorMessage = 'API kulcs hiba: A kulcs hiányzik vagy érvénytelen. Ellenőrizd a Vercel Environment Variables-t!';
+        } else {
+             // Általános hibaüzenet
+             errorMessage = `Gemini API hiba: ${error.message.substring(0, 100)}...`;
+        }
+
+        res.status(500).json({ error: errorMessage });
     }
 }
